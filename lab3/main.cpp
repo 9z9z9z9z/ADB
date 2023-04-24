@@ -1,65 +1,36 @@
 #include <iostream>
-#include <vector.h>
+#include <climits>
+#include <vector>
 
-struct Edge{
-    Edge() {}
-    Edge(int n1, int n2, int w) {
-        node1 = n1;
-        node2 = n2;
-        weight = w;
-    }
-
-    Edge& operator=(const Edge& rhs)
-    {
-        if (this == &rhs)
-            return *this;
-        else
-        {
-            node1 = rhs.node1;
-            node2 = rhs.node2;
-            weight = rhs.weight;
-            return *this;
+void dynamic_programming(std::vector<std::vector<int>>& matrix, int start, int end, std::vector<int>& weight) {
+    int n = matrix.size();
+    start--;
+    end--;
+    weight[start] = 0;
+    for (int i = 1; i <= n - 1; i++) {
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                if (matrix[j][k] != 0 && weight[j] != INT_MAX && weight[j] + matrix[j][k] < weight[k]) {
+                    weight[k] = weight[j] + matrix[j][k];
+                }
+            }
         }
     }
-
-    int node1;
-    int node2;
-    int weight;
-};
-
-std::ostream& operator<<(std::ostream& os, const Edge& pair) {
-    os << "(" << pair.node1 << ", " << pair.node2 << ", " << pair.weight << ")";
-    return os;
-}
-
-bool operator==(const Edge& lhs, const Edge& rhs) {
-    return lhs.weight == rhs.weight;
-}
-
-bool operator<(const Edge& lhs, const Edge& rhs) {
-    return lhs.weight < rhs.weight;
-}
-
-int dynamic_prgramming(std::vector<std::vector<int>> adjacencyMatrix) {
-    int path_weight = 0;
-    std::vector<int> node;
-    for (node : adjacencyMatrix) {
-        
-    }
-
-
 }
 
 int main() {
     std::vector<std::vector<int>> adjacencyMatrix = {
                             {0, 6, 6, 7, 9, 0, 0},
-                            {0, 0, 5, 0, 0, 2, 0},
+                            {0, 0, 5, 0, 0, 5, 0},
                             {0, 0, 0, 2, 2, 0, 3},
                             {0, 0, 0, 0, 0, 0, 1},
                             {0, 0, 0, 0, 0, 4, 8},
                             {0, 0, 0, 0, 0, 0, 4},
                             {0, 0, 0, 0, 0, 0, 0} };
 
+    std::vector<int> weight(adjacencyMatrix.size(), INT_MAX);
+    dynamic_programming(adjacencyMatrix, 1, 5, weight);
+    std::cout << "Shortest path with: " << 1 << " and " << 5 << " is: " << weight[4] << std::endl;
 
     return 0;
 }
