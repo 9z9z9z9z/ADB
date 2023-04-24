@@ -39,7 +39,6 @@ double* generate(int N) {
 
 struct Edge{
     Edge() {}
-
     Edge(int n1, int n2, int w) {
         node1 = n1;
         node2 = n2;
@@ -134,8 +133,8 @@ void prim_algorithm(const std::vector<std::vector<int>>& adjacencyMatrix) {
             }
         }
         if (a != -10 && b != -10) {
-            std::cout << "Edge " << ++edge_count;
-            std::cout << ":(" << a << ", " << b << ", "<< min << ")" << std::endl;
+            edge_count++;
+            std::cout << "(" << a + 1 << ", " << b + 1 << ", "<< min << ")" << std::endl;
             min_weight = min_weight + min;
             selected[b] = selected[a] = true;
         }
@@ -155,7 +154,7 @@ int kruskal_algorithm(std::vector<Edge>& edges, std::vector<std::vector<int>>& v
         min_weight += e.weight;
         Union(v, idx1, idx2);
         // print_array(v);
-        // std::cout << std::endl;
+        std::cout << e << std::endl;
     }
     return min_weight;
 }
@@ -169,28 +168,28 @@ int main() {
     std::cout << "==============  Lab3, Task4  ==============" << std::endl;
     int n = 5;
     std::cout << "an= " << (factorial(n)) / pow(2, n - 1) << std::endl;
-    std::cout << "==============  Lab4, Task6  ==============" << std::endl;
+    std::cout << "==============  Lab3, Task6  ==============" << std::endl;
     double* base = generate(10);
     for (int i = 0; i < 10; i++) {
         std::cout << base[i] << "  ";
     }
-    std::cout << "\n==============  Lab4  ==============" << std::endl;
+    std::cout << "\n==================  Lab4  ==================" << std::endl;
     std::cout << "============== Kruskal's algorithm ==============" << std::endl;
     std::vector<std::vector<int>> v = { {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8} };
-    std::vector<Edge> pairs = {Edge(4, 7, 1),
-                               Edge(4, 6, 1),
-                               Edge(5, 7, 2),
-                               Edge(5, 8, 2),
-                               Edge(3, 5, 2),
-                               Edge(1, 6, 3),
-                               Edge(1, 2, 4),
-                               Edge(2, 5, 5),
-                               Edge(6, 7, 5),
-                               Edge(1, 3, 6),
-                               Edge(1, 4, 6),
-                               Edge(3, 8, 7),
-                               Edge(4, 5, 7),
-                               Edge(1, 5, 8) };
+    std::vector<Edge> pairs = { Edge(4, 7, 1),
+                                Edge(4, 6, 1),
+                                Edge(5, 7, 2),
+                                Edge(5, 8, 2),
+                                Edge(3, 5, 2),
+                                Edge(1, 6, 3),
+                                Edge(1, 2, 4),
+                                Edge(2, 5, 5),
+                                Edge(6, 7, 5),
+                                Edge(1, 3, 6),
+                                Edge(1, 4, 6),
+                                Edge(3, 8, 7),
+                                Edge(4, 5, 7),
+                                Edge(1, 5, 8) };
 
     auto min_weight = kruskal_algorithm(pairs, v);
     std::cout << "Minimal weight = " << min_weight << std::endl;
@@ -212,12 +211,6 @@ int main() {
             }
         }
     }
-    for (const auto& el : pairs_for_prim) {
-        std::cout << el << std::endl;
-    }
-//    std::cout << "============== Kruskal's algorithm ==============" << std::endl;
-//    min_weight = kruskal_algorithm(pairs_for_prim, v);
-//    std::cout << "Kruskal weight = " << min_weight << std::endl;
     std::cout << "============== Prim's algorithm ==============" << std::endl;
     prim_algorithm(adjacencyMatrix);
     return 0;
